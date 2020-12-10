@@ -1,39 +1,46 @@
 = Docker Image for Terraform Operations
 
-== Build Image
+== Requirements and Setup
 
-Check that the following requirements are met:
+In order to build this image, you need the following requirements:
 
-* Docker Engine v19.03+
 * GNU Make 3.81+
+* Docker Engine v19.03+
+* **OR** if you do not want to /cannot use Docker (check the <<Setup>> section below for this):
+** [Build Phase] https://github.com/genuinetools/img[Jessie Frazelle's img tool]
+** [Test Phase] https://github.com/GoogleContainerTools/container-structure-test[Google's Container Structure Tests tool]
 
-Build the docker image with the command
+== Setup
+
+The build steps can be setup through the following environment variables:
+
+* `USE_DOCKER`: (default: `true`) Use Docker container to run commands. In confined environments without Docker, set it to a different value than `true`:
+
+[source,bash]
+USE_DOCKER="false" make all
+
+
+* `IMAGE_NAME`: (default: `docker-terraform`) Specify the Docker Image full name.
+
+* `IMAGE_TARBALL`: (default: `./<IMAGE_NAME>.tar`) Specify the path to the Docker Image's tarball archive file to be built.
+
+== Build Phase
+
+Build the docker image with the command:
 
 [source,bash]
 make build
 
-The image name is specified with the following variable that can be overidden in your environment:
+== Test Phase
 
-[source]
-----
-include::Makefile[tags="image_name"]
-----
-
-== Test Image
-
-Check that the following requirements are met:
-
-* https://github.com/GoogleContainerTools/container-structure-test[container-structure-test] v1.9.1+
-* GNU Make 3.81+
-
-Build the docker image with the command
+Execute the test harness against the docker image with the command:
 
 [source,bash]
 make test
 
-The image name is specified with the following variable that can be overidden in your environment:
+== Cleanup Phase
 
-[source]
-----
-include::Makefile[tags="image_name"]
-----
+Delete the generated artefacts with the command:
+
+[source,bash]
+make clean
