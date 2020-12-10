@@ -2,8 +2,38 @@
 
 == Build Image
 
-Build the docker image with `docker build -t <name> ./`.
+Check that the following requirements are met:
+
+* Docker Engine v19.03+
+* GNU Make 3.81+
+
+Build the docker image with the command
+
+[source,bash]
+make build
+
+The image name is specified with the following variable that can be overidden in your environment:
+
+[source]
+----
+include::Makefile[tags="image_name"]
+----
 
 == Test Image
 
-TBD.
+Check that the following requirements are met:
+
+* https://github.com/GoogleContainerTools/container-structure-test[container-structure-test] v1.9.1+
+* GNU Make 3.81+
+
+Build the docker image with the command
+
+[source,bash]
+make test
+
+The image name is specified with the following variable that can be overidden in your environment:
+
+[source]
+----
+include::Makefile[tags="image_name"]
+----
