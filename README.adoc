@@ -1,0 +1,9 @@
+= Docker Image for Terraform Operations
+
+== Build Image
+
+Build the docker image with `docker build -t <name> ./`.
+
+== Test Image
+
+TBD.
