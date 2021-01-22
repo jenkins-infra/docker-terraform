@@ -17,6 +17,9 @@ RUN apk add --no-cache \
   # Used to unarchive Terraform downloads
   unzip=~6
 
+## bash need to be installed for this instruction to work as expected
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ### Install Terraform CLI
 # Retrieve SHA256sum from https://releases.hashicorp.com/terraform/<TERRAFORM_VERSION>/terraform_<TERRAFORM_VERSION>_SHA256SUMS
 # For instance: "
@@ -44,3 +47,7 @@ USER "${USER}"
 LABEL io.jenkins-infra.tools="golang,terraform"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
+
+WORKDIR /app
+
+CMD ["/bin/bash"]
