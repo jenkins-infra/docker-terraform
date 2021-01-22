@@ -1,7 +1,11 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-FROM golang:1.15-alpine
+ARG GO_VERSION=1.15
+FROM golang:"${GO_VERSION}-alpine"
+
+## Repeating the ARG to add it into the scope of this image
+ARG GO_VERSION
 
 RUN apk add --no-cache \
   # To allow easier CLI completion + running shell scripts with array support
@@ -27,5 +31,6 @@ RUN curl --silent --show-error --location --remote-name \
   && rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
   && terraform --version
 
+LABEL io.jenkins-infra.tools="golang,terraform"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
-LABEL io.jenkins-infra.tools.golang.version="1.15"
+LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
