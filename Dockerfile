@@ -31,6 +31,16 @@ RUN curl --silent --show-error --location --remote-name \
   && rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
   && terraform --version
 
+ENV USER=infra
+ENV HOME=/home/"${USER}"
+ENV UID=1000
+
+RUN adduser -D -u "${UID}" "${USER}" \
+  && mkdir -p /run/${USER}/"${UID}" \
+  && chown -R "${USER}" /run/"${USER}"/"${UID}" /home/"${USER}"
+
+USER "${USER}"
+
 LABEL io.jenkins-infra.tools="golang,terraform"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
