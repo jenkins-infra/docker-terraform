@@ -22,8 +22,8 @@ RUN apk add --no-cache \
 # For instance: "
 # TERRAFORM_VERSION=X.YY.Z
 # curl -sSL https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_SHA256SUMS | grep linux_amd64
-ENV TERRAFORM_VERSION=0.13.5 \
-  TERRAFORM_ARCHIVE_SHA256=f7b7a7b1bfbf5d78151cfe3d1d463140b5fd6a354e71a7de2b5644e652ca5147
+ENV TERRAFORM_VERSION=0.13.6 \
+  TERRAFORM_ARCHIVE_SHA256=55f2db00b05675026be9c898bdd3e8230ff0c5c78dd12d743ca38032092abfc9
 
 RUN curl --silent --show-error --location --remote-name \
     "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
