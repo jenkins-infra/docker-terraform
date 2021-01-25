@@ -7,6 +7,7 @@ metadataTest:
       value: "infra"
     - key: "HOME"
       value: "/home/infra"
+
   labels:
     - key: io.jenkins-infra.tools
       value: "golang,terraform"
@@ -22,7 +23,11 @@ fileExistenceTests:
   - name: 'Terraform CLI'
     path: '/usr/local/bin/terraform'
     shouldExist: true
-  - name: "default user's home"
+    isExecutableBy: 'any'
+  - name: 'Terraform Archive must be cleaned up'
+    path: '/tmp/terraform.zip'
+    shouldExist: false
+  - name: "Default user's home"
     path: '/home/infra'
     shouldExist: true
 
