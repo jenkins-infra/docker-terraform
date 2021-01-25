@@ -25,8 +25,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # For instance: "
 # TERRAFORM_VERSION=X.YY.Z
 # curl -sSL https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_SHA256SUMS | grep linux_amd64
-ENV TERRAFORM_VERSION=0.13.6 \
-  TERRAFORM_ARCHIVE_SHA256=55f2db00b05675026be9c898bdd3e8230ff0c5c78dd12d743ca38032092abfc9
+ARG TERRAFORM_VERSION=0.13.6
+ARG TERRAFORM_ARCHIVE_SHA256=55f2db00b05675026be9c898bdd3e8230ff0c5c78dd12d743ca38032092abfc9
 RUN curl --silent --show-error --location --output /tmp/terraform.zip \
     "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
   && sha256sum /tmp/terraform.zip | grep -q "${TERRAFORM_ARCHIVE_SHA256}" \
