@@ -36,11 +36,10 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
 
 ENV USER=infra
 ENV HOME=/home/"${USER}"
-ENV UID=1000
 
-RUN adduser -D -u "${UID}" "${USER}" \
-  && mkdir -p /run/${USER}/"${UID}" \
-  && chown -R "${USER}" /run/"${USER}"/"${UID}" /home/"${USER}"
+RUN adduser -D -u 1000 "${USER}" \
+  && chown -R "${USER}" /home/"${USER}" \
+  && chmod -R 750 /home/"${USER}"
 
 USER "${USER}"
 
