@@ -40,6 +40,10 @@ fileExistenceTests:
     path: '/usr/local/bin/terraform'
     shouldExist: true
     isExecutableBy: 'any'
+  - name: 'tfsec CLI'
+    path: '/usr/local/bin/tfsec'
+    shouldExist: true
+    isExecutableBy: 'any'
   - name: 'Terraform Archive must be cleaned up'
     path: '/tmp/terraform.zip'
     shouldExist: false
