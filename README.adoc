@@ -1,9 +1,10 @@
 = Docker Image for Terraform Operations
 
-== Build Image
+This repository hosts the resources to build a Docker Image used for Terraform operation on the Jenkins Infrastructure.
 
-Build the docker image with `docker build -t <name> ./`.
+Its target is to provide a reproducible environment to not only run a controlled version of Terraform, but also to run infrastructure tests around terraform.
 
-== Test Image
+== Contribute
 
-TBD.
+If you want to contribute, or build/test the Docker Image, please refer to the following documentation about Docker images for the Jenkins Infra project:
+link:https://github.com/jenkins-infra/pipeline-library/blob/split_docker_build_and_publish/resources/io/jenkins/infra/docker/README.adoc[].

@@ -1,0 +1,54 @@
+---
+schemaVersion: 2.0.0
+
+metadataTest:
+  env:
+    - key: "USER"
+      value: "infra"
+    - key: "HOME"
+      value: "/home/infra"
+
+  labels:
+    - key: io.jenkins-infra.tools
+      value: "golang,terraform"
+    - key: io.jenkins-infra.tools.terraform.version
+      value: "0.13.6"
+    - key: io.jenkins-infra.tools.golang.version
+      value: "1.15"
+  entrypoint: []
+  cmd: ["/bin/bash"]
+  workdir: "/app"
+
+fileExistenceTests:
+  - name: 'Bash'
+    path: '/bin/bash'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: 'Curl'
+    path: '/usr/bin/curl'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: 'Make'
+    path: '/usr/bin/make'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: 'Unzip'
+    path: '/usr/bin/unzip'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: 'Terraform CLI'
+    path: '/usr/local/bin/terraform'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: 'Terraform Archive must be cleaned up'
+    path: '/tmp/terraform.zip'
+    shouldExist: false
+  - name: "Default user's home"
+    path: '/home/infra'
+    shouldExist: true
+
+fileContentTests:
+  - name: 'Default user exists with the correct UID/GID'
+    path: '/etc/passwd'
+    expectedContents: ['.*infra:x:1000:1000.*']
+...
