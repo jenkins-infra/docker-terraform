@@ -10,11 +10,13 @@ metadataTest:
 
   labels:
     - key: io.jenkins-infra.tools
-      value: "golang,terraform,golangci-lint"
+      value: "golang,terraform,tfsec,golangci-lint"
     - key: io.jenkins-infra.tools.terraform.version
       value: "0.13.6"
     - key: io.jenkins-infra.tools.golang.version
       value: "1.15"
+    - key: io.jenkins-infra.tools.tfsec.version
+      value: "0.39.5"
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.35.2"
   entrypoint: []
