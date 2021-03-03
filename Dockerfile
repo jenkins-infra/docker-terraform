@@ -44,6 +44,12 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && mv /tmp/tfsec /usr/local/bin/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
+
+ARG GOLANGCILINT_VERSION=1.35.2
+RUN curl --silent --show-error --location --fail \
+  https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
+  | sh -s -- -b "$(go env GOPATH)/bin" "v${GOLANGCILINT_VERSION}"
+
 ENV USER=infra
 ENV HOME=/home/"${USER}"
 
@@ -53,9 +59,10 @@ RUN adduser -D -u 1000 "${USER}" \
 
 USER "${USER}"
 
-LABEL io.jenkins-infra.tools="golang,terraform"
+LABEL io.jenkins-infra.tools="golang,terraform,golangci-lint"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
+LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
 
 WORKDIR /app
 
