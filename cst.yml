@@ -10,7 +10,7 @@ metadataTest:
 
   labels:
     - key: io.jenkins-infra.tools
-      value: "golang,terraform,tfsec,golangci-lint"
+      value: "golang,terraform,tfsec,golangci-lint,aws-cli,aws-iam-authenticator"
     - key: io.jenkins-infra.tools.terraform.version
       value: "0.13.6"
     - key: io.jenkins-infra.tools.golang.version
@@ -19,6 +19,10 @@ metadataTest:
       value: "0.39.5"
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.35.2"
+    - key: io.jenkins-infra.tools.aws-cli.version
+      value: "1.18"
+    - key: io.jenkins-infra.tools.aws-iam-authenticator.version
+      value: "latest"
   entrypoint: []
   cmd: ["/bin/bash"]
   workdir: "/app"
@@ -54,6 +58,14 @@ fileExistenceTests:
     isExecutableBy: 'any'
   - name: 'golangci-lint'
     path: '/go/bin/golangci-lint'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: 'AWS CLI'
+    path: '/usr/bin/aws'
+    shouldExist: true
+    isExecutableBy: 'any'
+  - name: 'AWS Authenticator'
+    path: '/usr/local/bin/aws-iam-authenticator'
     shouldExist: true
     isExecutableBy: 'any'
   - name: 'Terraform Archive must be cleaned up'

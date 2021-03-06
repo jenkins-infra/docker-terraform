@@ -7,7 +7,9 @@ FROM golang:"${GO_VERSION}-alpine"
 ## Repeating the ARG to add it into the scope of this image
 ARG GO_VERSION
 
+ARG AWS_CLI_VERSION=1.18
 RUN apk add --no-cache \
+  aws-cli=~"${AWS_CLI_VERSION}" \
   # To allow easier CLI completion + running shell scripts with array support
   bash=~5 \
   # Used to download binaries (implies the package "ca-certificates" as a dependency)
@@ -48,6 +50,11 @@ RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "$(go env GOPATH)/bin" "v${GOLANGCILINT_VERSION}"
 
+RUN curl --silent --show-error --location --fail --output /usr/local/bin/aws-iam-authenticator \
+  https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/aws-iam-authenticator \
+  && chmod a+x /usr/local/bin/aws-iam-authenticator \
+  && aws-iam-authenticator version
+
 ENV USER=infra
 ENV HOME=/home/"${USER}"
 
@@ -57,11 +64,13 @@ RUN adduser -D -u 1000 "${USER}" \
 
 USER "${USER}"
 
-LABEL io.jenkins-infra.tools="golang,terraform,tfsec,golangci-lint"
+LABEL io.jenkins-infra.tools="golang,terraform,tfsec,golangci-lint,aws-cli,aws-iam-authenticator"
 LABEL io.jenkins-infra.tools.terraform.version="${TERRAFORM_VERSION}"
 LABEL io.jenkins-infra.tools.golang.version="${GO_VERSION}"
 LABEL io.jenkins-infra.tools.tfsec.version="${TFSEC_VERSION}"
 LABEL io.jenkins-infra.tools.golangci-lint.version="${GOLANGCILINT_VERSION}"
+LABEL io.jenkins-infra.tools.aws-cli.version="${AWS_CLI_VERSION}"
+LABEL io.jenkins-infra.tools.aws-iam-authenticator.version="latest"
 
 WORKDIR /app
 
