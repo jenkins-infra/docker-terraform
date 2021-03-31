@@ -1,5 +1,19 @@
-buildDockerAndPublishImage('terraform', [
-  mainBranch: 'main',
-  automaticSemanticVersioning: true,
-  gitCredentials: 'github-app-infra'
-])
+
+parallel(
+  failFast: true,
+  'docker-image': {
+    buildDockerAndPublishImage('terraform', [
+      mainBranch: 'main',
+      automaticSemanticVersioning: true,
+      gitCredentials: 'github-app-infra'
+    ])
+  },
+  'updatecli': {
+    withCredentials([string(credentialsId: 'updatecli-github-token', variable: 'UPDATECLI_GITHUB_TOKEN')]) {
+      updatecli('diff')
+      if (env.BRANCH_NAME == 'main') {
+        updatecli('apply')
+      }
+    }
+  },
+)
