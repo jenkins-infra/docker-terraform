@@ -1,1 +1,5 @@
-buildDockerAndPublishImage('terraform', [mainBranch: 'main'])
+buildDockerAndPublishImage('terraform', [
+  mainBranch: 'main',
+  automaticSemanticVersioning: true,
+  gitCredentials: 'github-app-infra'
+])
