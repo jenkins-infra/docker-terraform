@@ -1,12 +1,9 @@
 ---
-title: "[golang base image] Bump version"
-PipelineID: updatecliToolsUpdates
+title: "Bump golang version"
 sources:
   getGolangVersion:
     kind: githubRelease
     name: Get the latest Golang version
-    transformers:
-      - trimPrefix: "go"
     spec:
       owner: "golang"
       repository: "go"
@@ -15,8 +12,10 @@ sources:
       versionFilter:
         kind: regex
         pattern: 'go1.15.(\d*)'
+    transformers:
+      - trimPrefix: "go"
 conditions:
-  dockerfileArgGoVersion:
+  testDockerfileArgGoVersion:
     name: "Does the Dockerfile have an ARG instruction which key is GO_VERSION?"
     kind: dockerfile
     spec:
@@ -24,9 +23,16 @@ conditions:
       instruction:
         keyword: "ARG"
         matcher: "GO_VERSION"
+  testCstGolangVersion:
+    name: "Does the test harness checks for a label label io.jenkins-infra.tools.golang.version?"
+    kind: yaml
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[2].key"
+      value: io.jenkins-infra.tools.golang.version
 targets:
   updateCstGoVersion:
-    name: "Update the value of GO_VERSION in the test harness"
+    name: "Update the label io.jenkins-infra.tools.golang.version in the test harness"
     sourceID: getGolangVersion
     kind: yaml
     spec:

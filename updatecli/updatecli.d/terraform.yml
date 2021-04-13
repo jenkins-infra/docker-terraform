@@ -1,12 +1,9 @@
 ---
-title: "[Terraform] Bump version"
-PipelineID: updatecliToolsUpdates
+title: "Bump terraform version"
 sources:
   getTerraformVersion:
     kind: githubRelease
     name: Get the latest Terraform version
-    transformers:
-      - trimPrefix: "v"
     spec:
       owner: "hashicorp"
       repository: "terraform"
@@ -15,8 +12,10 @@ sources:
       versionFilter:
         kind: regex
         pattern: '0.13.(\d*)'
+    transformers:
+      - trimPrefix: "v"
 conditions:
-  dockerfileArgTerraformVersion:
+  testDockerfileArgTerraformVersion:
     name: "Does the Dockerfile have an ARG instruction which key is TERRAFORM_VERSION?"
     kind: dockerfile
     spec:
@@ -24,14 +23,21 @@ conditions:
       instruction:
         keyword: "ARG"
         matcher: "TERRAFORM_VERSION"
+  testCstTerraformVersion:
+    name: "Does the test harness checks for a label io.jenkins-infra.tools.terraform.version?"
+    kind: yaml
+    spec:
+      file: "cst.yml"
+      key: "metadataTest.labels[1].key"
+      value: io.jenkins-infra.tools.terraform.version
 targets:
   updateCstTerraformVersion:
-    name: "Update the value of TERRAFORM_VERSION in the test harness"
+    name: "Update the label io.jenkins-infra.tools.terraform.version in the test harness"
     sourceID: getTerraformVersion
     kind: yaml
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[2].value"
+      key: "metadataTest.labels[1].value"
     scm:
       github:
         user: "{{ .github.user }}"
