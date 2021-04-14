@@ -1,20 +1,17 @@
----
 schemaVersion: 2.0.0
-
 metadataTest:
   env:
     - key: "USER"
       value: "infra"
     - key: "HOME"
       value: "/home/infra"
-
   labels:
     - key: io.jenkins-infra.tools
       value: "golang,terraform,tfsec,golangci-lint,aws-cli,aws-iam-authenticator"
     - key: io.jenkins-infra.tools.terraform.version
       value: "0.13.6"
     - key: io.jenkins-infra.tools.golang.version
-      value: "1.15"
+      value: "1.15.11"
     - key: io.jenkins-infra.tools.tfsec.version
       value: "0.39.5"
     - key: io.jenkins-infra.tools.golangci-lint.version
@@ -26,7 +23,6 @@ metadataTest:
   entrypoint: []
   cmd: ["/bin/bash"]
   workdir: "/app"
-
 fileExistenceTests:
   - name: 'Bash'
     path: '/bin/bash'
@@ -74,9 +70,7 @@ fileExistenceTests:
   - name: "Default user's home"
     path: '/home/infra'
     shouldExist: true
-
 fileContentTests:
   - name: 'Default user exists with the correct UID/GID'
     path: '/etc/passwd'
     expectedContents: ['.*infra:x:1000:1000.*']
-...
