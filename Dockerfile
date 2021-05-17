@@ -1,11 +1,11 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.15.11
+ARG GO_VERSION=1.15.12
 FROM golang:"${GO_VERSION}-alpine"
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.15.11
+ARG GO_VERSION=1.15.12
 
 ARG AWS_CLI_VERSION=1.18
 RUN apk add --no-cache \
@@ -37,7 +37,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && rm -f /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
-ARG TFSEC_VERSION=0.39.22
+ARG TFSEC_VERSION=0.39.34
 RUN curl --silent --show-error --location --output /tmp/tfsec \
     "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
