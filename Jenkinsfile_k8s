@@ -1,17 +1,20 @@
 parallel(
   failFast: true,
   'docker-image': {
-    buildDockerAndPublishImage('terraform', [
-      mainBranch: 'main',
-      automaticSemanticVersioning: true,
-      gitCredentials: 'github-app-infra'
-    ])
+    // Do not rebuild the image when triggered by a periodic job
+    if (!currentBuild.getBuildCauses().contains("hudson.triggers.TimerTrigger")){
+      buildDockerAndPublishImage('terraform', [
+        mainBranch: 'main',
+        automaticSemanticVersioning: true,
+        gitCredentials: 'github-app-infra'
+      ])
+    }
   },
   'updatecli': {
     withCredentials([string(credentialsId: 'updatecli-github-token', variable: 'UPDATECLI_GITHUB_TOKEN')]) {
-      updatecli(action: 'diff')
+      updatecli(action: 'diff', cronTriggerExpression: '@hourly')
       if (env.BRANCH_NAME == 'main') {
-        updatecli(action: 'apply')
+        updatecli(action: 'apply', cronTriggerExpression: '@weekly')
       }
     }
   },
