@@ -11,7 +11,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.terraform.version
       value: "0.13.7"
     - key: io.jenkins-infra.tools.golang.version
-      value: "1.15.13"
+      value: "1.15.14"
     - key: io.jenkins-infra.tools.tfsec.version
       value: "0.40.4"
     - key: io.jenkins-infra.tools.golangci-lint.version
