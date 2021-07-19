@@ -11,7 +11,7 @@ sources:
       username: "{{ .github.username }}"
       versionFilter:
         kind: regex
-        pattern: 'go1.15.(\d*)'
+        pattern: 'go1.16.(\d*)'
     transformers:
       - trimPrefix: "go"
 conditions:
