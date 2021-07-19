@@ -1,24 +1,28 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.15.13
+ARG GO_VERSION=1.16.6
 FROM golang:"${GO_VERSION}-alpine"
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.15.13
+ARG GO_VERSION=1.16.6
 
-ARG AWS_CLI_VERSION=1.18
 RUN apk add --no-cache \
-  aws-cli=~"${AWS_CLI_VERSION}" \
   # To allow easier CLI completion + running shell scripts with array support
   bash=~5 \
   # Used to download binaries (implies the package "ca-certificates" as a dependency)
   curl=~7 \
   # Dev. Tooling packages (e.g. tools provided by this image installable through Alpine Linux Packages)
-  git=~2 \
+  git=~2\
   make=~4 \
+  # Required for aws-cli
+  py-pip=~20 \
   # Used to unarchive Terraform downloads
   unzip=~6
+
+## Install AWS Cli
+ARG AWS_CLI_VERSION=1.18
+RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ## bash need to be installed for this instruction to work as expected
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

@@ -1,43 +1,41 @@
 ---
-title: "Bump golang version"
+title: "Bump awscli version"
 sources:
-  getGolangVersion:
+  getAwscliVersion:
     kind: githubRelease
-    name: Get the latest Golang version
+    name: Get the latest Awscli version
     spec:
-      owner: "golang"
-      repository: "go"
+      owner: "aws"
+      repository: "aws-cli"
       token: "{{ requiredEnv .github.token }}"
       username: "{{ .github.username }}"
       versionFilter:
         kind: regex
-        pattern: 'go1.16.(\d*)'
-    transformers:
-      - trimPrefix: "go"
+        pattern: '1.(\d*).(\d*)'
 conditions:
-  testDockerfileArgGoVersion:
-    name: "Does the Dockerfile have an ARG instruction which key is GO_VERSION?"
+  testDockerfileArgAwscliVersion:
+    name: "Does the Dockerfile have an ARG instruction which key is AWS_CLI_VERSION?"
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
-        matcher: "GO_VERSION"
-  testCstGolangVersion:
-    name: "Does the test harness checks for a label label io.jenkins-infra.tools.golang.version?"
+        matcher: "AWS_CLI_VERSION"
+  testCstAwscliVersion:
+    name: "Does the test harness checks for a label io.jenkins-infra.tools.aws-cli.version?"
     kind: yaml
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[2].key"
-      value: io.jenkins-infra.tools.golang.version
+      key: "metadataTest.labels[5].key"
+      value: io.jenkins-infra.tools.aws-cli.version
 targets:
-  updateCstGoVersion:
-    name: "Update the label io.jenkins-infra.tools.golang.version in the test harness"
-    sourceID: getGolangVersion
+  updateCstAwscliVersion:
+    name: "Update the label io.jenkins-infra.tools.aws-cli.version in the test harness"
+    sourceID: getAwscliVersion
     kind: yaml
     spec:
       file: "cst.yml"
-      key: "metadataTest.labels[2].value"
+      key: "metadataTest.labels[5].value"
     scm:
       github:
         user: "{{ .github.user }}"
@@ -47,15 +45,15 @@ targets:
         token: "{{ requiredEnv .github.token }}"
         username: "{{ .github.username }}"
         branch: "{{ .github.branch }}"
-  updateDockerfileArgGoVersion:
-    name: "Update the value of ARG GO_VERSION in the Dockerfile"
-    sourceID: getGolangVersion
+  updateDockerfileArgAwscliVersion:
+    name: "Update the value of ARG AWS_CLI_VERSION in the Dockerfile"
+    sourceID: getAwscliVersion
     kind: dockerfile
     spec:
       file: Dockerfile
       instruction:
         keyword: "ARG"
-        matcher: "GO_VERSION"
+        matcher: "AWS_CLI_VERSION"
     scm:
       github:
         user: "{{ .github.user }}"
