@@ -1,11 +1,11 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.16.6
+ARG GO_VERSION=1.16.7
 FROM golang:"${GO_VERSION}-alpine"
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.16.6
+ARG GO_VERSION=1.16.7
 
 RUN apk add --no-cache \
   # To allow easier CLI completion + running shell scripts with array support
