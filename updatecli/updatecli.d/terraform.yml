@@ -11,7 +11,7 @@ sources:
       username: "{{ .github.username }}"
       versionFilter:
         kind: regex
-        pattern: '0.13.(\d*)'
+        pattern: '1.0.(\d*)'
     transformers:
       - trimPrefix: "v"
 conditions:
