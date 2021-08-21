@@ -47,7 +47,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 
-ARG GOLANGCILINT_VERSION=1.41.1
+ARG GOLANGCILINT_VERSION=1.42.0
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "$(go env GOPATH)/bin" "v${GOLANGCILINT_VERSION}"
