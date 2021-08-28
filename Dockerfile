@@ -39,7 +39,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && rm -f /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
-ARG TFSEC_VERSION=0.58.4
+ARG TFSEC_VERSION=0.58.5
 RUN curl --silent --show-error --location --output /tmp/tfsec \
     "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
