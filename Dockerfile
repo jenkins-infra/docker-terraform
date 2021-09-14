@@ -1,11 +1,11 @@
 # Golang is required for terratest
 # 1.15 ensure that the latest patch is always used but avoiding breaking changes when Golang as a minor upgrade
 # Alpine is used by default for fast and ligthweight customization
-ARG GO_VERSION=1.16.7
+ARG GO_VERSION=1.16.8
 FROM golang:"${GO_VERSION}-alpine"
 
 ## Repeating the ARG to add it into the scope of this image
-ARG GO_VERSION=1.16.7
+ARG GO_VERSION=1.16.8
 
 RUN apk add --no-cache \
   # To allow easier CLI completion + running shell scripts with array support
@@ -47,7 +47,7 @@ RUN curl --silent --show-error --location --output /tmp/tfsec \
   && tfsec --version | grep "${TFSEC_VERSION}"
 
 
-ARG GOLANGCILINT_VERSION=1.42.0
+ARG GOLANGCILINT_VERSION=1.42.1
 RUN curl --silent --show-error --location --fail \
   https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
   | sh -s -- -b "$(go env GOPATH)/bin" "v${GOLANGCILINT_VERSION}"
