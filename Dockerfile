@@ -32,14 +32,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # For instance: "
 # TERRAFORM_VERSION=X.YY.Z
 # curl -sSL https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_SHA256SUMS | grep linux_amd64
-ARG TERRAFORM_VERSION=1.0.7
+ARG TERRAFORM_VERSION=1.0.8
 RUN curl --silent --show-error --location --output /tmp/terraform.zip \
     "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
   && unzip /tmp/terraform.zip -d /usr/local/bin \
   && rm -f /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
-ARG TFSEC_VERSION=0.58.10
+ARG TFSEC_VERSION=0.58.12
 RUN curl --silent --show-error --location --output /tmp/tfsec \
     "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
