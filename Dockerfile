@@ -21,7 +21,7 @@ RUN apk add --no-cache \
   unzip=~6
 
 ## Install AWS Cli
-ARG AWS_CLI_VERSION=1.21.7
+ARG AWS_CLI_VERSION=1.21.8
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ## bash need to be installed for this instruction to work as expected
