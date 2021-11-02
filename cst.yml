@@ -17,7 +17,7 @@ metadataTest:
     - key: io.jenkins-infra.tools.golangci-lint.version
       value: "1.42.1"
     - key: io.jenkins-infra.tools.aws-cli.version
-      value: "1.21.2"
+      value: "1.21.8"
   entrypoint: []
   cmd: ["/bin/bash"]
   workdir: "/app"
