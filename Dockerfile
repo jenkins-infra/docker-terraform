@@ -21,7 +21,7 @@ RUN apk add --no-cache \
   unzip=~6
 
 ## Install AWS Cli
-ARG AWS_CLI_VERSION=1.21.8
+ARG AWS_CLI_VERSION=1.21.12
 RUN python3 -m pip install --no-cache-dir awscli=="${AWS_CLI_VERSION}"
 
 ## bash need to be installed for this instruction to work as expected
@@ -39,7 +39,7 @@ RUN curl --silent --show-error --location --output /tmp/terraform.zip \
   && rm -f /tmp/terraform.zip \
   && terraform --version | grep "${TERRAFORM_VERSION}"
 
-ARG TFSEC_VERSION=0.58.14
+ARG TFSEC_VERSION=0.58.15
 RUN curl --silent --show-error --location --output /tmp/tfsec \
     "https://github.com/tfsec/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64" \
   && chmod a+x /tmp/tfsec \
