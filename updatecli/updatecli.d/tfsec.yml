@@ -17,6 +17,7 @@ conditions:
   testDockerfileArgTfsecVersion:
     name: "Does the Dockerfile have an ARG instruction which key is TFSEC_VERSION?"
     kind: dockerfile
+    disablesourceinput: true
     spec:
       file: Dockerfile
       instruction:
@@ -25,6 +26,7 @@ conditions:
   testCstTfsecVersion:
     name: "Does the test harness checks for a label io.jenkins-infra.tools.tfsec.version?"
     kind: yaml
+    disablesourceinput: true
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[3].key"
