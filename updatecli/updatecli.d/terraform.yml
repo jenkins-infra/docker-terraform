@@ -18,6 +18,7 @@ conditions:
   testDockerfileArgTerraformVersion:
     name: "Does the Dockerfile have an ARG instruction which key is TERRAFORM_VERSION?"
     kind: dockerfile
+    disablesourceinput: true
     spec:
       file: Dockerfile
       instruction:
@@ -26,6 +27,7 @@ conditions:
   testCstTerraformVersion:
     name: "Does the test harness checks for a label io.jenkins-infra.tools.terraform.version?"
     kind: yaml
+    disablesourceinput: true
     spec:
       file: "cst.yml"
       key: "metadataTest.labels[1].key"
