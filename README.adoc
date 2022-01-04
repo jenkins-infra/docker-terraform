@@ -1,5 +1,8 @@
 = Docker Image for Terraform Operations
 
+[IMPORTANT]
+Project superseeded by https://github.com/jenkins-infra/docker-hashicorp-tools
+
 This repository hosts the resources to build a Docker Image used for Terraform operation on the Jenkins Infrastructure.
 
 Its target is to provide a reproducible environment to not only run a controlled version of Terraform, but also to run infrastructure tests around terraform.
